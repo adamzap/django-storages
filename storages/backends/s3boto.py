@@ -334,7 +334,9 @@ class S3BotoStorage(Storage):
         return _parse_datestring(entry.last_modified)
 
     def url(self, name):
-        name = self._normalize_name(self._clean_name(name))
+        if name != 'admin/':
+            name = self._normalize_name(self._clean_name(name))
+
         if self.custom_domain:
             return "%s://%s/%s" % ('https' if self.secure_urls else 'http',
                                    self.custom_domain, name)
